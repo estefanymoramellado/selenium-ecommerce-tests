@@ -73,4 +73,25 @@ def test_agregar_producto_al_carrito(driver):
     contador = driver.find_element(By.CLASS_NAME, "shopping_cart_badge")
     assert contador.text == "1"
    
+def test_checkout_ok(driver):
+    hacer_login(driver)
+    wait = WebDriverWait(driver,10)
+    wait.until(EC.presence_of_element_located((By.ID, "add-to-cart-sauce-labs-backpack")))
+    driver.find_element(By.ID, "add-to-cart-sauce-labs-backpack").click()  
+    wait.until(EC.presence_of_element_located((By.CLASS_NAME, "shopping_cart_link")))
+    driver.find_element(By.CLASS_NAME, "shopping_cart_link").click()  
+    wait.until(EC.presence_of_element_located((By.ID, "checkout")))
+    driver.find_element(By.ID, "checkout").click()
+    wait.until(EC.presence_of_element_located((By.ID, "first-name")))
+    driver.find_element(By.ID, "first-name").send_keys("Estefany")
+    wait.until(EC.presence_of_element_located((By.ID, "last-name")))
+    driver.find_element(By.ID, "last-name").send_keys("Mora")
+    wait.until(EC.presence_of_element_located((By.ID, "postal-code")))
+    driver.find_element(By.ID, "postal-code").send_keys("8150000")
+    wait.until(EC.presence_of_element_located((By.ID, "continue")))
+    driver.find_element(By.ID, "continue").click()
+    wait.until(EC.presence_of_element_located((By.ID, "finish")))
+    driver.find_element(By.ID, "finish").click()
+    mensaje = driver.find_element(By.CLASS_NAME, "complete-header")
+    assert "Thank you" in mensaje.text
 
