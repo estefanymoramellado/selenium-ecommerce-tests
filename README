@@ -1,0 +1,78 @@
+# Selenium E-commerce Tests
+
+Suite de pruebas automatizadas **end-to-end (E2E)** para un sitio de e-commerce, desarrollada con **Selenium** y **pytest** en Python. Las pruebas automatizan los flujos principales de una tienda online —inicio de sesión, navegación de productos, carrito y checkout— cubriendo tanto casos exitosos como casos de error.
+
+El sitio bajo prueba es [SauceDemo](https://www.saucedemo.com/), una aplicación de e-commerce diseñada específicamente para la práctica de automatización de pruebas.
+
+---
+
+## Tecnologías
+
+- **Python 3** — lenguaje principal
+- **Selenium** — automatización del navegador
+- **pytest** — framework de ejecución de pruebas
+- **Microsoft Edge** — navegador utilizado
+
+---
+
+## Pruebas implementadas
+
+La suite cubre seis escenarios, combinando casos positivos y negativos:
+
+1. **Login exitoso** — verifica que con credenciales válidas el usuario accede al inventario.
+2. **Inventario muestra productos** — verifica que tras iniciar sesión se cargan productos en la página.
+3. **Login con contraseña incorrecta** — caso negativo: verifica que aparece un mensaje de error y no se accede al inventario.
+4. **Login con contraseña vacía** — caso negativo: verifica el manejo de un campo obligatorio vacío.
+5. **Agregar producto al carrito** — verifica que al agregar un producto el contador del carrito se actualiza.
+6. **Checkout completo** — automatiza el flujo de compra de punta a punta: login, agregar producto, ir al carrito, completar el formulario de datos y confirmar el pedido.
+
+---
+
+## Buenas prácticas aplicadas
+
+- **Esperas explícitas** (`WebDriverWait` + `expected_conditions`) en lugar de pausas fijas, para pruebas más robustas y eficientes.
+- **Fixture de pytest** para la gestión del navegador: abre el navegador antes de cada prueba y lo cierra al finalizar automáticamente.
+- **Función de login reutilizable** parametrizada (`login(driver, usuario, password)`), que evita duplicación de código y permite probar distintos escenarios con la misma función.
+- **Cobertura de casos positivos y negativos**, validando tanto el comportamiento esperado como el manejo de errores.
+
+---
+
+## Instalación y ejecución
+
+### Requisitos previos
+- Python 3 instalado
+- Microsoft Edge instalado
+
+### Pasos
+
+1. **Clonar el repositorio**
+   \`\`\`bash
+   git clone https://github.com/estefanymoramellado/selenium-ecommerce-tests.git
+   cd selenium-ecommerce-tests
+   \`\`\`
+
+2. **Crear y activar un entorno virtual**
+   \`\`\`bash
+   python -m venv venv
+   venv\Scripts\activate
+   \`\`\`
+
+3. **Instalar las dependencias**
+   \`\`\`bash
+   pip install selenium pytest
+   \`\`\`
+
+4. **Ejecutar las pruebas**
+   \`\`\`bash
+   pytest -v -s
+   \`\`\`
+   El parámetro \`-v\` muestra cada prueba con su resultado; \`-s\` permite ver la ejecución en el navegador.
+
+---
+
+## Posibles mejoras futuras
+
+- **Page Object Model (POM):** reorganizar el código separando la representación de cada página (selectores y acciones) de la lógica de las pruebas, para mejorar la mantenibilidad.
+- **Ampliar la cobertura:** agregar más escenarios (ordenar productos, eliminar del carrito, validaciones adicionales del formulario).
+- **Integración continua:** ejecutar la suite automáticamente con GitHub Actions en cada cambio.
+- **Reportes:** generar reportes de ejecución de las pruebas.
