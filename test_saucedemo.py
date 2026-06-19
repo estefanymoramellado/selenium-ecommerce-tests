@@ -33,11 +33,13 @@ def hacer_login_incorrecto(driver):
     driver.find_element(By.ID, "login-button").click()
     wait.until (EC.presence_of_element_located((By.CSS_SELECTOR, "[data-test='error']")))
 
+
 def test_login_error(driver):
     hacer_login_incorrecto(driver)
     error = driver.find_element(By.CSS_SELECTOR, "[data-test='error']")
     assert error.is_displayed()
     assert "inventory" not in driver.current_url
+
 
 def hacer_login_vacio(driver):
     wait = WebDriverWait(driver, 10)
@@ -45,6 +47,7 @@ def hacer_login_vacio(driver):
     driver.find_element(By.ID, "password").send_keys("")
     driver.find_element(By.ID, "login-button").click()
     wait.until (EC.presence_of_element_located((By.CSS_SELECTOR, "[data-test='error']")))
+
 
 def test_login_vacio(driver):
     hacer_login_vacio(driver)
@@ -60,3 +63,14 @@ def test_inventario_muestra_productos(driver):
         EC.presence_of_all_elements_located((By.CLASS_NAME, "inventory_item"))
     )
     assert len(productos) > 0
+
+def test_agregar_producto_al_carrito(driver):
+    hacer_login(driver)
+    wait = WebDriverWait(driver,10)
+    wait.until(EC.presence_of_element_located((By.ID, "add-to-cart-sauce-labs-backpack")))
+    driver.find_element(By.ID, "add-to-cart-sauce-labs-backpack").click()
+    wait.until(EC.presence_of_element_located((By.CLASS_NAME, "shopping_cart_badge")))
+    contador = driver.find_element(By.CLASS_NAME, "shopping_cart_badge")
+    assert contador.text == "1"
+   
+
